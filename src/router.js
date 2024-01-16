@@ -18,6 +18,7 @@ import IntroShaders from '@/pages/shader/Intro_Shader.vue';
 import LesRenderings from '@/pages/rendering/A_RenderingIndex.vue';
 import IntroRendering from '@/pages/rendering/B_Intro_Rendering.vue';
 import Override from '@/pages/rendering/RenderingOveride.vue';
+import Rotation from '@/pages/rendering/RenderingRotation.vue';
 
 import LesObjet3D from '@/pages/objet3D/A_Objet3DIndex.vue';
 import IntroObjet3D from '@/pages/objet3D/B_Intro_Objet3D.vue';
@@ -112,6 +113,11 @@ const router = createRouter({
                     path: 'override',
                     name: 'override',
                     component: Override,
+                },
+                {
+                    path: 'rotation',
+                    name: 'rotation',
+                    component: Rotation,
                 }
             ]
         },

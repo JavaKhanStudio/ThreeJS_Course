@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {initAndBuildThree, resetCubePosition, setMoving} from '@/ThreeJS/rendering/A_FlyingCube.js';
+import {initAndBuildThree, resetCubePosition, setMoving} from '@/ThreeJS/rendering/C_FlyingCube.js';
 import SceneController from "@/components/SceneController.vue";
 export default {
   components: {SceneController},
@@ -34,23 +34,5 @@ export default {
 </script>
 
 <style scoped>
-canvas {
-  width: 100%;
-  height: 100%;
-}
-
-button {
-  height: 50px;
-}
-
-.columnContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.optionsContainer {
-  display: flex;
-  justify-content: space-around;
-}
 
 </style>

@@ -4,6 +4,7 @@ import * as ThreeCanvas from "@/ThreeJS/BasicAndMouse";
 import * as THREE from "three";
 
 const basePath = '/texture/wood/' ;
+const basePathGrass = '/texture/grass/' ;
 let scene ;
 let element ;
 let ambientLight ;
@@ -31,6 +32,8 @@ export function initAndBuildThree(container) {
 
     scene.add(element) ;
     ThreeCanvas.lookAtIm(element) ;
+
+    applyGrass()
 }
 
 export function setAmbientLight(addOrRemove) {
@@ -62,6 +65,16 @@ export function applySimpleWood() {
 export function applyNormalWood() {
     let texture = new THREE.TextureLoader().load(basePath + 'basecolor.jpg');
     let normalMap = new THREE.TextureLoader().load(basePath + 'normal.jpg');
+
+    element.material = new THREE.MeshStandardMaterial({
+        map: texture,
+        normalMap: normalMap
+    }) ;
+}
+
+export function applyGrass() {
+    let texture = new THREE.TextureLoader().load(basePathGrass + 'grass.png');
+    let normalMap = new THREE.TextureLoader().load(basePathGrass + 'normal.png');
 
     element.material = new THREE.MeshStandardMaterial({
         map: texture,

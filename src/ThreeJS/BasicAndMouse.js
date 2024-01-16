@@ -19,6 +19,7 @@ let  scene;
 let  container;
 let  canvasBounds;
 let externalRenderFunction = null;
+let externalMouseMovementFunction = null;
 
 export function getRenderer()
 {
@@ -135,6 +136,10 @@ function onMouseMove(event) {
     mouse.y = -((clampedY - canvasBounds.top) / canvasBounds.height) * 2 + 1;
 
     mouse3D.set(mouse.x, mouse.y, 0.0); // Set Z between -1 and 1
+
+    if (externalMouseMovementFunction) {
+        externalMouseMovementFunction(mouse);
+    }
 }
 
 function createRenderer(canvas, isTransparent) {

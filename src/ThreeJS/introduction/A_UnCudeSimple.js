@@ -25,6 +25,5 @@ export function initAndBuildThree(container) {
 
     ThreeCanvas.getScene().add(element) ;
     ThreeCanvas.lookAtIm(element) ;
-    // ADD CODE HERE
 
 }

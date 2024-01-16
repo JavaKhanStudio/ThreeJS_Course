@@ -3,8 +3,6 @@
     <button @click="zoomInOrOut(true)">Zoom In</button>
     <button @click="zoomInOrOut(false)">Zoom Out</button>
     <button @click="resetCamera()">Reset Camera</button>
-    <button @click="applyComplexWood">Apply Proper Texture</button>
-
     <div class="checkboxContainer">
       <label for="debugCheckbox">Debug</label>
       <input type="checkbox" checked id="debugCheckbox" @change="addOrRemoveDebugElements($event.target.checked)">
