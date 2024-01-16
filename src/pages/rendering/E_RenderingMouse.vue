@@ -5,11 +5,11 @@
     <div class="optionsContainer">
       <button @click="resetCubePosition">Reset Cube Position</button>
 
-      <div class="checkboxContainer">
-        <label for="isMovingCheckbox">Make move</label>
-        <input type="checkbox" id="isMovingCheckbox" @change="setMoving($event.target.checked)">
-      </div>
+      <button @click="setCameraFrontFacing">Camera Front Facing</button>
 
+      <button @click="setCameraSideFacing">Camera Side Facing</button>
+
+      <h3>Press Space bar to move</h3>
     </div>
 
     <canvas id="c"></canvas>
@@ -17,7 +17,11 @@
 </template>
 
 <script>
-import {initAndBuildThree, resetCubePosition, setMoving} from '@/ThreeJS/rendering/E_MouseFollowing.js';
+import {
+  initAndBuildThree,
+  resetCubePosition,
+  setCameraFrontFacing, setCameraSideFacing
+} from '@/ThreeJS/rendering/E_MouseFollowing.js';
 import SceneController from "@/components/SceneController.vue";
 export default {
   components: {SceneController},
@@ -26,7 +30,7 @@ export default {
     const container = canvas.parentElement;
     initAndBuildThree(container);
   },
-  methods: {setMoving, resetCubePosition},
+  methods: {setCameraSideFacing, setCameraFrontFacing, resetCubePosition},
   beforeUnmount() {
 
   }

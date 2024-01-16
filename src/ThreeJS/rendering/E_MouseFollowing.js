@@ -2,6 +2,7 @@
 /* eslint-disable no-empty */
 import * as ThreeCanvas from "@/ThreeJS/BasicAndMouse";
 import * as THREE from "three";
+import * as KEY_ENUM from "@/ThreeJS/KeyEnum";
 
 const basePath = '/texture/wood/' ;
 const basePathGrass = '/texture/grass/' ;
@@ -10,9 +11,25 @@ let element ;
 let ambientLight ;
 let directionalLight ;
 let isMoving ;
+let camera ;
 
-let movementForce = 1 ;
+let movementForce = 0.5 ;
 
+window.addEventListener('keydown', onDocumentKeyDown, false);
+
+function onDocumentKeyDown(event) {
+    if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+    }
+
+    let keyCode = event.which;
+
+    if (keyCode === KEY_ENUM.keyboard.SPACE) {
+        setMoving(!isMoving)
+    } else if(keyCode === KEY_ENUM.keyboard.KEY_A) {
+        console.log("A")
+    }
+}
 export function initAndBuildThree(container) {
 
     ThreeCanvas.initThreeJSBase(container, true) ;
@@ -34,17 +51,17 @@ export function initAndBuildThree(container) {
 
     scene.add(element) ;
 
+    setCameraFrontFacing() ;
+    camera = ThreeCanvas.getCamera() ;
     ThreeCanvas.lookAtIm(element) ;
-
 
     ThreeCanvas.setCustomRenderFunction((delta) => {
         if(isMoving) {
             let mouseDirection = ThreeCanvas.getNormalizedMouse() ;
-            mouseDirection = mouseDirection.multiply(movementForce)  ;
+
+            mouseDirection = mouseDirection.multiplyScalar(movementForce * delta)  ;
             if(mouseDirection) {
-                console.log(mouseDirection) ;
                 element.position.add(mouseDirection) ;
-                console.log(element.position) ;
             } else {
                 console.log("No set Position")
             }
@@ -58,11 +75,34 @@ export function initAndBuildThree(container) {
 
 export function resetCubePosition() {
     element.position.set(0, 0, 0);
+    setCameraSideFacing() ;
 }
 
 export function setMoving(makeMove) {
     isMoving = makeMove ;
 }
+
+export function setCameraFrontFacing() {
+    if(camera) {
+        camera.position.x = element.position.x ;
+        camera.position.y = element.position.y ;
+        camera.position.z = element.position.z + 8;
+
+        ThreeCanvas.lookAtIm(element) ;
+    }
+}
+
+export function setCameraSideFacing() {
+    if(camera) {
+        camera.position.x = element.position.x + 3;
+        camera.position.y = element.position.y + 3;
+        camera.position.z = element.position.z + 3;
+
+        ThreeCanvas.lookAtIm(element) ;
+    }
+
+}
+
 
 export function setDirectionalLight(addOrRemove) {
     if(addOrRemove) {

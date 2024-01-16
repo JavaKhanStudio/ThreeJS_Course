@@ -167,10 +167,13 @@ function createCamera(width, height) {
 }
 
 export function resetCamera() {
-
     camera.position.x = 3.0;
     camera.position.y = 3.0;
     camera.position.z = 3.0;
+}
+
+export function getCamera() {
+    return camera ;
 }
 export function zoomInOrOut(isIn) {
 
@@ -207,7 +210,14 @@ export function setInDebug(setOrRemove) {
 }
 
 export function getNormalizedMouse() {
-    return mouse3D.normalize() ;
+
+    if(mouse3D) {
+        return mouse3D.clone().normalize() ;
+    } else {
+        console.log("PAS DE MOUSE 3D a NORMALISE")
+        return null ;
+    }
+
 }
 
 function initDebug() {
