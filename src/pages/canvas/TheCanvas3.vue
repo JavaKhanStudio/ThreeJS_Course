@@ -1,13 +1,13 @@
 <template>
   <div class="columnContainer">
-    <h1>Canvas 2</h1>
+    <h1>Canvas 3</h1>
     <SceneController/>
     <canvas id="c"></canvas>
   </div>
 </template>
 
 <script>
-import {initAndBuildThree} from '@/ThreeJS/canvas/Canvas2.js';
+import {initAndBuildThree} from '@/ThreeJS/canvas/Canvas3.js';
 import SceneController from "@/components/SceneController.vue";
 
 export default {

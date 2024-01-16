@@ -20,8 +20,8 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/rendering/TODO">
-            TODO
+          <router-link to="/rendering/mouse">
+            Mouse Movement
           </router-link>
         </li>
       </ul>

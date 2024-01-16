@@ -100,6 +100,7 @@ export function initThreeJSBase(isContainer, inDebug) {
 
         // Calculate the delta time
         const deltaTime = time - lastRenderTime;
+
         lastRenderTime = time;
 
         if (externalRenderFunction) {
@@ -203,7 +204,10 @@ export function setInDebug(setOrRemove) {
         scene.remove(line);
         createRenderer(canvas, true) ;
     }
+}
 
+export function getNormalizedMouse() {
+    return mouse3D.normalize() ;
 }
 
 function initDebug() {

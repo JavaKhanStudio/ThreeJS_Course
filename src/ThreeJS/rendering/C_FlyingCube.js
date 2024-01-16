@@ -22,7 +22,7 @@ export function initAndBuildThree(container) {
     ThreeCanvas.setCustomRenderFunction((delta) => {
 
         if(isMoving) {
-            element.position.set(0,element.position.y + (1 * delta) ,0) ;
+            element.position.set(0,element.position.y + (3 * delta) ,0) ;
         }
 
     });

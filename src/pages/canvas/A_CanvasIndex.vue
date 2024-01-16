@@ -18,6 +18,11 @@
             Canvas 2
           </router-link>
         </li>
+        <li>
+          <router-link to="/canvas/canvas3">
+            Canvas 3
+          </router-link>
+        </li>
       </ul>
     </nav>
     <router-view v-slot="{ Component }">

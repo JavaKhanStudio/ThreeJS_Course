@@ -11,14 +11,16 @@ import LesCanvas from '@/pages/canvas/A_CanvasIndex.vue';
 import IntroCanvas from '@/pages/canvas/B_Intro_LesCanvas.vue';
 import Canvas1 from '@/pages/canvas/TheCanvas1.vue';
 import Canvas2 from '@/pages/canvas/TheCanvas2.vue';
+import Canvas3 from '@/pages/canvas/TheCanvas3.vue';
 
 import LesShaders from '@/pages/shader/A_ShaderIndex.vue';
 import IntroShaders from '@/pages/shader/Intro_Shader.vue';
 
 import LesRenderings from '@/pages/rendering/A_RenderingIndex.vue';
 import IntroRendering from '@/pages/rendering/B_Intro_Rendering.vue';
-import Override from '@/pages/rendering/RenderingOveride.vue';
-import Rotation from '@/pages/rendering/RenderingRotation.vue';
+import Override from '@/pages/rendering/C_RenderingOveride.vue';
+import Rotation from '@/pages/rendering/D_RenderingRotation.vue';
+import MouseMovement from '@/pages/rendering/E_RenderingMouse.vue';
 
 import LesObjet3D from '@/pages/objet3D/A_Objet3DIndex.vue';
 import IntroObjet3D from '@/pages/objet3D/B_Intro_Objet3D.vue';
@@ -72,6 +74,11 @@ const router = createRouter({
                     path: 'Canvas2',
                     name: 'Canvas2',
                     component: Canvas2
+                },
+                {
+                    path: 'Canvas3',
+                    name: 'Canvas3',
+                    component: Canvas3
                 }
             ]
         },
@@ -118,7 +125,15 @@ const router = createRouter({
                     path: 'rotation',
                     name: 'rotation',
                     component: Rotation,
+                },
+                {
+                    path: 'mouse',
+                    name: 'mouse',
+                    component: MouseMovement,
                 }
+
+
+
             ]
         },
     ]
