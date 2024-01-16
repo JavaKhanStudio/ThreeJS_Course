@@ -1,6 +1,5 @@
 <template>
   <div class="container-center">
-
     <div>
       <nav>
         <ul>
@@ -15,6 +14,11 @@
             </router-link>
           </li>
           <li>
+            <router-link to="/rendering">
+              Explication Rendering
+            </router-link>
+          </li>
+          <li>
             <router-link to="/objet3D">
               Explication Objet 3D
             </router-link>
@@ -22,11 +26,6 @@
           <li>
             <router-link to="/shader">
               Explication shaders
-            </router-link>
-          </li>
-          <li>
-            <router-link to="/scene">
-              Explication scene
             </router-link>
           </li>
           <li class="centered">

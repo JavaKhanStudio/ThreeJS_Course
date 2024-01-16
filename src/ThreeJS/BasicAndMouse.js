@@ -13,10 +13,12 @@ window.addEventListener('scroll', updateCanvasBounds, false);
 
 
 let  renderer;
+let canvas ;
 let  camera;
 let  scene;
 let  container;
 let  canvasBounds;
+let externalRenderFunction = null;
 
 export function getRenderer()
 {
@@ -44,7 +46,6 @@ function onWindowResize() {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
 
-    // renderer.setSize(width, height - 4);
     renderer.setSize(width, height);
     updateCanvasBounds();
 }
@@ -58,7 +59,6 @@ function updateCanvasBounds() {
     }
 }
 
-
 export function initThreeJSBase(isContainer, inDebug) {
 
     container = isContainer;
@@ -69,7 +69,7 @@ export function initThreeJSBase(isContainer, inDebug) {
         return;
     }
 
-    const canvas = container.querySelector('canvas');
+    canvas = container.querySelector('canvas');
 
     if (!canvas) {
         console.error('No canvas element found in the container.');
@@ -82,42 +82,45 @@ export function initThreeJSBase(isContainer, inDebug) {
 
     scene = new THREE.Scene();
 
-
     if (inDebuggingMode) {
-        addDebugElements();
+        setInDebug(true);
     }
 
     let firstRender = true;
-    let secondRender = false;
-    let timmingOnSecondRender = 0;
+    let lastRenderTime = 0;
 
-    function render() {
+    onWindowResize() ;
+
+    function render(time) {
 
         makeRenderCheck() ;
+
+        time *= 0.001;
+
+        // Calculate the delta time
+        const deltaTime = time - lastRenderTime;
+        lastRenderTime = time;
+
+        if (externalRenderFunction) {
+            externalRenderFunction(deltaTime);
+        }
 
         requestAnimationFrame(render);
         renderer.render(scene, camera);
     }
 
     function makeRenderCheck() {
-        if (secondRender) {
-            timmingOnSecondRender += 1
-
-            if (timmingOnSecondRender > 30) {
-                onWindowResize();
-                secondRender = false;
-            }
-        }
-
         if (firstRender) {
             firstRender = false;
             container.style.display = 'flex'; // Show the canvas after the first render
-            secondRender = true;
-
         }
     }
 
     requestAnimationFrame(render);
+}
+
+export function setCustomRenderFunction(func) {
+    externalRenderFunction = func;
 }
 
 function onMouseMove(event) {
@@ -133,7 +136,6 @@ function onMouseMove(event) {
 
     mouse3D.set(mouse.x, mouse.y, 0.0); // Set Z between -1 and 1
 }
-
 
 function createRenderer(canvas, isTransparent) {
     if (renderer) {
@@ -154,25 +156,59 @@ function createCamera(width, height) {
     const far = 300;
 
     camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+    resetCamera() ;
+
+}
+
+export function resetCamera() {
+
     camera.position.x = 3.0;
     camera.position.y = 3.0;
     camera.position.z = 3.0;
+}
+export function zoomInOrOut(isIn) {
+
+    let cameraDirection = camera.position.clone().normalize();
+    let zoomStep = 2;
+
+    if (isIn) {
+        camera.position.sub(cameraDirection.multiplyScalar(zoomStep));
+    } else {
+        camera.position.add(cameraDirection.multiplyScalar(zoomStep));
+    }
 
 }
 
 // Debugging stuff
 let line;
+let axesHelper ;
 
-function addDebugElements() {
-    // Create axis helper to display the center of the scene
-    const axesHelper = new THREE.AxesHelper(10);
-    scene.add(axesHelper);
+export function setInDebug(setOrRemove) {
+
+    if(!axesHelper || !line) {
+        initDebug() ;
+    }
+
+    if(setOrRemove) {
+        scene.add(axesHelper);
+        scene.add(line);
+        createRenderer(canvas,false) ;
+    } else {
+        scene.remove(axesHelper);
+        scene.remove(line);
+        createRenderer(canvas, true) ;
+    }
+
+}
+
+function initDebug() {
+    // Create axis helper to display the center of the rendering
+    axesHelper = new THREE.AxesHelper(10);
 
     // Create a line between the center and the mouse
     let lineMaterial = new THREE.LineBasicMaterial({color: 0x0000ff});
     let lineGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0)]);
     line = new THREE.Line(lineGeometry, lineMaterial);
-    scene.add(line);
 }
 
 export function lookAtIm(element) {

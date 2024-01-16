@@ -42,3 +42,44 @@ nav li a {
 nav li a:hover {
     background-color: #111;
 }
+
+canvas {
+    width: 100%;
+    height: 50%;
+    max-height: 500px; /* Maximum height */
+}
+
+button {
+    height: 33px;
+}
+
+.columnContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.optionsContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.checkboxContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+/* For List presentation */
+.introductionContainer {
+    width: 80%;
+    margin: auto;
+}
+
+.introductionContainer ul {
+    text-align: left;
+
+}
+
+.introductionContainer li {
+
+}

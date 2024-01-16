@@ -1,25 +1,26 @@
 <template>
   <div>
+    <top-logo-section/>
     <nav>
       <ul>
 
         <li>
-          <router-link to="/intro">
+          <router-link to="/rendering">
+            Intro Rendering
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/rendering/override">
+            Override
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/rendering/TODO">
             TODO
           </router-link>
         </li>
         <li>
-          <router-link to="/intro/TODO">
-            TODO
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/intro/TODO">
-            TODO
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/intro/TODO">
+          <router-link to="/rendering/TODO">
             TODO
           </router-link>
         </li>
