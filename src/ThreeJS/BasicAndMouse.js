@@ -21,6 +21,8 @@ let  canvasBounds;
 let externalRenderFunction = null;
 let externalMouseMovementFunction = null;
 
+let shaders = [] ;
+
 export function getRenderer()
 {
     return renderer ;
@@ -107,6 +109,11 @@ export function initThreeJSBase(isContainer, inDebug) {
             externalRenderFunction(deltaTime);
         }
 
+        shaders.forEach(theShader => {
+            theShader.uniforms.time.value = time;
+            theShader.uniforms.uMouse.value.set(mouse.x, mouse.y);
+        })
+
         requestAnimationFrame(render);
         renderer.render(scene, camera);
     }
@@ -123,6 +130,19 @@ export function initThreeJSBase(isContainer, inDebug) {
 
 export function setCustomRenderFunction(func) {
     externalRenderFunction = func;
+}
+
+export function createShaderMaterial(vertexShader,fragmentShader) {
+    const uniforms = {
+        time: {value: 1.0},
+        uMouse: {value: new THREE.Vector2()}
+    };
+
+    return new THREE.ShaderMaterial({
+        uniforms: uniforms,
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader
+    });
 }
 
 function onMouseMove(event) {

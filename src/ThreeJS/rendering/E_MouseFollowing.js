@@ -13,7 +13,7 @@ let directionalLight ;
 let isMoving ;
 let camera ;
 
-let movementForce = 0.5 ;
+let movementForce = 1.5 ;
 
 window.addEventListener('keydown', onDocumentKeyDown, false);
 
