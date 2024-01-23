@@ -1,25 +1,31 @@
 <template>
   <div>
+    <top-logo-section/>
     <nav>
       <ul>
         <li>
-          <router-link to="/intro">
-            TODO
+          <router-link to="/shader">
+            Intro Shaders
           </router-link>
         </li>
         <li>
-          <router-link to="/intro/TODO">
-            TODO
+          <router-link to="/shader/shadows">
+            Shadows
           </router-link>
         </li>
         <li>
-          <router-link to="/intro/TODO">
-            TODO
+          <router-link to="/shader/funshaders">
+            Fun Shaders
           </router-link>
         </li>
         <li>
-          <router-link to="/intro/TODO">
-            TODO
+          <router-link to="/shader/textureShader">
+            Texture avec Shader
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/shader/theCloud">
+            Texture avec Shader Complexe
           </router-link>
         </li>
       </ul>

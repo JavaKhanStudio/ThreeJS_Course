@@ -19,13 +19,13 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/objet3D">
-              Explication Objet 3D
+            <router-link to="/shader">
+              Explication shaders
             </router-link>
           </li>
           <li>
-            <router-link to="/shader">
-              Explication shaders
+            <router-link to="/objet3D">
+              Explication Objet 3D
             </router-link>
           </li>
           <li class="centered">

@@ -3,18 +3,21 @@ import Home from '@/pages/IndexPage.vue';
 
 import VersIntroduction from '@/pages/introduction/A_IntroductionIndex.vue';
 import IntroIntroduction from '@/pages/introduction/B_Intro_Introduction.vue';
-import SimpleCube from '@/pages/introduction/SimpleCube.vue';
-import CubeAvecTexture from '@/pages/introduction/CubeAvecTexture.vue';
+import SimpleCube from '@/pages/introduction/C_SimpleCube.vue';
+import CubeAvecTexture from '@/pages/introduction/D_CubeAvecTexture.vue';
 
 
 import LesCanvas from '@/pages/canvas/A_CanvasIndex.vue';
 import IntroCanvas from '@/pages/canvas/B_Intro_LesCanvas.vue';
 import Canvas1 from '@/pages/canvas/TheCanvas1.vue';
 import Canvas2 from '@/pages/canvas/TheCanvas2.vue';
-import Canvas3 from '@/pages/canvas/TheCanvas3.vue';
 
 import LesShaders from '@/pages/shader/A_ShaderIndex.vue';
-import IntroShaders from '@/pages/shader/Intro_Shader.vue';
+import IntroShaders from '@/pages/shader/B_Intro_Shader.vue';
+import Shadows from '@/pages/shader/C_ShadowRealm.vue';
+import FunShaders from '@/pages/shader/D_FunShader.vue';
+import TextureShader  from '@/pages/shader/E_ShaderTexture.vue';
+import TheCloud  from '@/pages/shader/F_ComplexeShaderTexture.vue';
 
 import LesRenderings from '@/pages/rendering/A_RenderingIndex.vue';
 import IntroRendering from '@/pages/rendering/B_Intro_Rendering.vue';
@@ -74,11 +77,6 @@ const router = createRouter({
                     path: 'Canvas2',
                     name: 'Canvas2',
                     component: Canvas2
-                },
-                {
-                    path: 'Canvas3',
-                    name: 'Canvas3',
-                    component: Canvas3
                 }
             ]
         },
@@ -103,6 +101,26 @@ const router = createRouter({
                     path: '',
                     name: 'IntroShaders',
                     component: IntroShaders
+                },
+                {
+                    path: 'shadows',
+                    name: 'Shadows',
+                    component: Shadows
+                },
+                {
+                    path: 'funshaders',
+                    name: 'FunShaders',
+                    component: FunShaders
+                },
+                {
+                    path: 'textureShader',
+                    name: 'TextureShader',
+                    component: TextureShader
+                },
+                {
+                    path: 'theCloud',
+                    name: 'TheCloud',
+                    component: TheCloud
                 }
             ]
         },

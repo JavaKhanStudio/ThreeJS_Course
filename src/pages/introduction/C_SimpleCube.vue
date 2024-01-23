@@ -7,8 +7,9 @@
 </template>
 
 <script>
-import {initAndBuildThree} from '@/ThreeJS/introduction/A_UnCudeSimple.js';
+import {initAndBuildThree} from '@/ThreeJS/introduction/C_UnCudeSimple.js';
 import SceneController from "@/components/SceneController.vue";
+import {cleanupThreeJS} from "@/ThreeJS/BasicAndMouse";
 
 export default {
   components: {SceneController},
@@ -19,7 +20,7 @@ export default {
   },
   methods: {},
   beforeUnmount() {
-
+    cleanupThreeJS() ;
   }
 }
 </script>

@@ -1,14 +1,15 @@
 <template>
   <div class="columnContainer">
-    <h1>Canvas 3</h1>
+    <h1>Texture avec Shader</h1>
     <SceneController/>
     <canvas id="c"></canvas>
   </div>
 </template>
 
 <script>
-import {initAndBuildThree} from '@/ThreeJS/canvas/Canvas3.js';
+import {initAndBuildThree} from '@/ThreeJS/shader/E_ShaderTexture.js';
 import SceneController from "@/components/SceneController.vue";
+import {cleanupThreeJS} from "@/ThreeJS/BasicAndMouse";
 
 export default {
   components: {SceneController},
@@ -19,7 +20,7 @@ export default {
   },
   methods: {},
   beforeUnmount() {
-
+    cleanupThreeJS() ;
   }
 }
 </script>

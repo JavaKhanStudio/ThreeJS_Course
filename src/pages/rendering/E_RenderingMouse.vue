@@ -23,6 +23,7 @@ import {
   setCameraFrontFacing, setCameraSideFacing
 } from '@/ThreeJS/rendering/E_MouseFollowing.js';
 import SceneController from "@/components/SceneController.vue";
+import {cleanupThreeJS} from "@/ThreeJS/BasicAndMouse";
 export default {
   components: {SceneController},
   mounted() {
@@ -32,7 +33,7 @@ export default {
   },
   methods: {setCameraSideFacing, setCameraFrontFacing, resetCubePosition},
   beforeUnmount() {
-
+    cleanupThreeJS() ;
   }
 }
 </script>

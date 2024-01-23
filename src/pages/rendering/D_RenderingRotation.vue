@@ -30,6 +30,7 @@
 <script>
 import SceneController from "@/components/SceneController.vue";
 import {initAndBuildThree, setMovingOnX, setMovingOnY, setMovingOnZ} from "@/ThreeJS/rendering/D_UnCudeQuiTourne";
+import {cleanupThreeJS} from "@/ThreeJS/BasicAndMouse";
 export default {
   components: {SceneController},
   mounted() {
@@ -39,7 +40,7 @@ export default {
   },
   methods: {setMovingOnZ, setMovingOnY, setMovingOnX},
   beforeUnmount() {
-
+    cleanupThreeJS() ;
   }
 }
 </script>

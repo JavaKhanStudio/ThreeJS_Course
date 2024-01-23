@@ -2,14 +2,11 @@
 import * as THREE from "three";
 
 let inDebuggingMode;
-
+let frameId;
 
 const mouse = {x: 0, y: 0};
 let mouse3D = new THREE.Vector3();
 
-window.addEventListener('mousemove', onMouseMove, false);
-window.addEventListener('resize', onWindowResize, false);
-window.addEventListener('scroll', updateCanvasBounds, false);
 
 
 let  renderer;
@@ -21,7 +18,6 @@ let  canvasBounds;
 let externalRenderFunction = null;
 let externalMouseMovementFunction = null;
 
-let shaders = [] ;
 
 export function getRenderer()
 {
@@ -33,6 +29,11 @@ export function getScene()
     return scene ;
 }
 
+function builtEventListener() {
+    window.addEventListener('mousemove', onMouseMove, false);
+    window.addEventListener('resize', onWindowResize, false);
+    window.addEventListener('scroll', updateCanvasBounds, false);
+}
 
 function onWindowResize() {
     if (!camera || !renderer || !container) return;
@@ -66,6 +67,7 @@ export function initThreeJSBase(isContainer, inDebug) {
 
     container = isContainer;
     inDebuggingMode = inDebug ;
+    builtEventListener() ;
 
     if (!container) {
         console.error('No container element provided for Three.js initialization.');
@@ -109,12 +111,7 @@ export function initThreeJSBase(isContainer, inDebug) {
             externalRenderFunction(deltaTime);
         }
 
-        shaders.forEach(theShader => {
-            theShader.uniforms.time.value = time;
-            theShader.uniforms.uMouse.value.set(mouse.x, mouse.y);
-        })
-
-        requestAnimationFrame(render);
+        frameId = requestAnimationFrame(render);
         renderer.render(scene, camera);
     }
 
@@ -132,18 +129,11 @@ export function setCustomRenderFunction(func) {
     externalRenderFunction = func;
 }
 
-export function createShaderMaterial(vertexShader,fragmentShader) {
-    const uniforms = {
-        time: {value: 1.0},
-        uMouse: {value: new THREE.Vector2()}
-    };
-
-    return new THREE.ShaderMaterial({
-        uniforms: uniforms,
-        vertexShader: vertexShader,
-        fragmentShader: fragmentShader
-    });
+export function toggleShadows() {
+    renderer.shadowMap.enabled = !renderer.shadowMap.enabled;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Optional: for softer shadows
 }
+
 
 function onMouseMove(event) {
     if (!camera || !canvasBounds) return;
@@ -182,8 +172,8 @@ function createCamera(width, height) {
     const far = 300;
 
     camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    resetCamera() ;
 
+    resetCamera() ;
 }
 
 export function resetCamera() {
@@ -192,9 +182,20 @@ export function resetCamera() {
     camera.position.z = 3.0;
 }
 
+export function setCameraPosition(x,y,z) {
+    camera.position.x = x;
+    camera.position.y = y;
+    camera.position.z = z;
+}
+
 export function getCamera() {
     return camera ;
 }
+
+export function setCamera(newCamera) {
+    camera = newCamera
+}
+
 export function zoomInOrOut(isIn) {
 
     let cameraDirection = camera.position.clone().normalize();
@@ -229,6 +230,10 @@ export function setInDebug(setOrRemove) {
     }
 }
 
+export function getMouse2D() {
+    return mouse ;
+}
+
 export function getNormalizedMouse() {
 
     if(mouse3D) {
@@ -253,3 +258,69 @@ function initDebug() {
 export function lookAtIm(element) {
     camera.lookAt(element.position) ;
 }
+
+export function add(element) {
+    scene.add(element) ;
+}
+
+let directionalLight
+let lightsAreOn ;
+
+export function toggleLights() {
+    initLight() ;
+    if(lightsAreOn) {
+        scene.remove(directionalLight);
+    } else {
+        scene.add(directionalLight);
+    }
+
+    return directionalLight ;
+}
+
+export function setLightPosition(x,y,z) {
+    initLight() ;
+
+    if(!x) {
+        x = directionalLight.position.x ;
+    }
+    if(!y) {
+        y = directionalLight.position.y ;
+    }
+    if(!z) {
+        z = directionalLight.position.z ;
+    }
+
+    directionalLight.position.set(x, y, z);
+}
+
+export function initLightPrecise(x,y,z) {
+    if(!directionalLight) {
+        directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+
+        directionalLight.position.set(x,y,z);
+        directionalLight.castShadow = true;
+
+        // Better shadow quality
+        directionalLight.shadow.mapSize.width = 1024;  // Default is 512
+        directionalLight.shadow.mapSize.height = 1024; // Default is 512
+        directionalLight.shadow.camera.near = 0.5;     // Default
+        directionalLight.shadow.camera.far = 500;      // Default
+    }
+
+    return directionalLight ;
+}
+
+export function initLight() {
+    return initLightPrecise(5, 10, 7.5) ;
+}
+
+export function removeEventListeners() {
+    window.removeEventListener('mousemove', onMouseMove, false);
+    window.removeEventListener('resize', onWindowResize, false);
+    window.removeEventListener('scroll', updateCanvasBounds, false);
+}
+
+export function cleanupThreeJS() {
+    cancelAnimationFrame(frameId);
+    removeEventListeners() ;
+ }

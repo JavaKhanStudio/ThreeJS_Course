@@ -1,5 +1,5 @@
 <template>
-  <h1>W.I.P</h1>
+  <h1>Section shaders</h1>
 </template>
 
 <script>

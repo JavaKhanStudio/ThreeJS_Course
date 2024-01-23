@@ -31,8 +31,9 @@ import {
   applyComplexWood,
   setAmbientLight,
   setDirectionalLight, applyNormalWood
-} from '@/ThreeJS/introduction/B_UnCudeAvecTexture.js';
+} from '@/ThreeJS/introduction/D_UnCudeAvecTexture.js';
 import SceneController from "@/components/SceneController.vue";
+import {cleanupThreeJS} from "@/ThreeJS/BasicAndMouse";
 
 export default {
   components: {SceneController},
@@ -43,7 +44,7 @@ export default {
   },
   methods: {applyNormalWood, setDirectionalLight, applyColor, applySimpleWood, applyComplexWood, setAmbientLight},
   beforeUnmount() {
-
+    cleanupThreeJS() ;
   }
 }
 </script>

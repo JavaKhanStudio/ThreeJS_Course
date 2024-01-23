@@ -83,3 +83,21 @@ button {
 .introductionContainer li {
 
 }
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slider-container input[type=range] {
+    flex-grow: 1;
+}
+
+.radioContainer {
+    /* Your styling here */
+}
+.radioContainer label {
+    margin-right: 15px; /* Space out the radio buttons */
+    /* Other label styling */
+}
