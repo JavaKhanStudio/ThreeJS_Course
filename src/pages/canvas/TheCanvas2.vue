@@ -9,6 +9,7 @@
 <script>
 import {initAndBuildThree} from '@/ThreeJS/canvas/Canvas2.js';
 import SceneController from "@/components/SceneController.vue";
+import {cleanupThreeJS} from "@/ThreeJS/BasicAndMouse";
 
 export default {
   components: {SceneController},
@@ -19,7 +20,7 @@ export default {
   },
   methods: {},
   beforeUnmount() {
-
+    cleanupThreeJS() ;
   }
 }
 </script>

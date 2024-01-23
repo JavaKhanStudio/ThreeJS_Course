@@ -17,7 +17,7 @@ const float vibrationSpeed = 2.0;
 vec3 calculateNewPositionBaseOnMouse() {
     vec3 newPosition = position;
     // Get the mouse position in clip space
-    vec3 mousePosition = vec3(uMouse, 0.0);
+    vec3 mousePosition = vec3(uMouse, 0);
 
     // get normalized vectors for push dots towards the mouse
     vec3 normalizedPosition  = normalize(position);
@@ -101,6 +101,3 @@ void main() {
 
     gl_PointSize = 2.0;
 }
-
-
-

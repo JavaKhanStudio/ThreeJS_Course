@@ -28,6 +28,11 @@
               Explication Objet 3D
             </router-link>
           </li>
+          <li>
+            <router-link to="/divers">
+              Divers
+            </router-link>
+          </li>
           <li class="centered">
             <theme-button></theme-button>
           </li>

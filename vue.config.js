@@ -5,10 +5,17 @@ module.exports = defineConfig({
   chainWebpack: config => {
     // Add rule for .glsl, .vs, .fs, .vert, and .frag files
     config.module
-        .rule('glsl')
-        .test(/\.(glsl|vs|fs|vert|frag)$/)
+        .rule('raws')
+        .test(/\.(glsl|vs|fs|vert|frag|mtl)$/)
         .use('raw-loader')
         .loader('raw-loader')
+        .end();
+
+    config.module
+        .rule('3dmodels')
+        .test(/\.(fbx|FBX|obj|OBJ)$/)
+        .use('file-loader')
+        .loader('file-loader')
         .end();
   }
 });

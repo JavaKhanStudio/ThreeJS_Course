@@ -28,6 +28,10 @@ import MouseMovement from '@/pages/rendering/E_RenderingMouse.vue';
 import LesObjet3D from '@/pages/objet3D/A_Objet3DIndex.vue';
 import IntroObjet3D from '@/pages/objet3D/B_Intro_Objet3D.vue';
 
+import VersDivers from '@/pages/divers/A_DiversIndex.vue';
+import IntroDivers from '@/pages/divers/B_Intro_Divers.vue';
+import Melody3D from '@/pages/divers/C_Melody3D.vue';
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -50,6 +54,28 @@ const router = createRouter({
                     path: 'simpleCube',
                     name: 'simpleCube',
                     component: SimpleCube
+                },
+                {
+                    path: 'cubeAvecTexture',
+                    name: 'cubeAvecTexture',
+                    component: CubeAvecTexture
+                }
+            ]
+        },
+        {
+            path: '/divers',
+            name: 'VersDivers',
+            component: VersDivers,
+            children: [
+                {
+                    path: '',
+                    name: 'IntroductionDivers',
+                    component: IntroDivers
+                },
+                {
+                    path: 'melody3D',
+                    name: 'Melody3D',
+                    component: Melody3D
                 },
                 {
                     path: 'cubeAvecTexture',
