@@ -48,16 +48,17 @@ function loadTexture() {
     const normalMap = textureLoader.load(texturePath + '/ship_normal.jpg');
     const roughnessMap = textureLoader.load(texturePath + '/ship_rough.jpg');
 
-// Create a PBR material with the loaded textures
     const material = new THREE.MeshStandardMaterial({
         map: colorMap,
         aoMap: aoMap,
         emissiveMap: emissiveMap,
+        emissive: new THREE.Color('white'), // This color can be adjusted to match your emissive map
+        emissiveIntensity: 10, // Adjust the intensity as needed
         metalnessMap: metalnessMap,
         normalMap: normalMap,
         roughnessMap: roughnessMap,
-        metalness: 1, // This value is material-specific and can be adjusted
-        roughness: 1  // This value is material-specific and can be adjusted
+        metalness: 2, // This value is material-specific and can be adjusted
+        roughness: 2  // This value is material-specific and can be adjusted
     });
 
     return material ;

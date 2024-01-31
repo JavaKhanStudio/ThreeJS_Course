@@ -33,6 +33,11 @@
               Divers
             </router-link>
           </li>
+          <li>
+            <router-link to="/evaluation">
+              Evaluation
+            </router-link>
+          </li>
           <li class="centered">
             <theme-button></theme-button>
           </li>

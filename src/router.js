@@ -32,6 +32,13 @@ import VersDivers from '@/pages/divers/A_DiversIndex.vue';
 import IntroDivers from '@/pages/divers/B_Intro_Divers.vue';
 import Melody3D from '@/pages/divers/C_Melody3D.vue';
 
+
+import VersEvaluation from '@/pages/evaluation/A_EvaluationIndex.vue';
+import IntroEvaluation from '@/pages/evaluation/B_Intro_Evaluation.vue';
+import ExempleEvaluation from '@/pages/evaluation/C_ExempleEvaluation.vue';
+import OpenEvaluation from '@/pages/evaluation/D_EspaceEvaluation.vue';
+
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -57,8 +64,30 @@ const router = createRouter({
                 },
                 {
                     path: 'cubeAvecTexture',
-                    name: 'cubeAvecTexture',
+                    name: 'CubeAvecTexture',
                     component: CubeAvecTexture
+                }
+            ]
+        },
+        {
+            path: '/evaluation',
+            name: 'VersEvaluation',
+            component: VersEvaluation,
+            children: [
+                {
+                    path: '',
+                    name: 'IntroEvaluatoion',
+                    component: IntroEvaluation
+                },
+                {
+                    path: 'exempleEvaluation',
+                    name: 'ExempleEvaluation',
+                    component: ExempleEvaluation
+                },
+                {
+                    path: 'openEvaluation',
+                    name: 'OpenEvaluation',
+                    component: OpenEvaluation
                 }
             ]
         },

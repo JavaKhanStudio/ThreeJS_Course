@@ -33,12 +33,8 @@ const customMaterial = new THREE.ShaderMaterial({
         void main() {
             vUv = uv;
             vec3 pos = position;
-            float wave2 = sin(pos.x * 2.0 + pos.y * 2.0 + time) * 0.5;
-            pos.z += wave2;
-            float wave = cos(pos.x * 2.0 + pos.y * 2.0 + time) * 0.5;
-            pos.y += wave;
-            float wave2 = sin(pos.x * 2.0 + pos.y * 2.0 + time) * 0.5;
-            pos.z += wave2;
+            float wave = sin(pos.x * 2.0 + pos.y * 2.0 + time) * 0.5;
+            pos.z += wave;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
         }
     `,
