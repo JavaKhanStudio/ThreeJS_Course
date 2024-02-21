@@ -9,6 +9,11 @@
           </router-link>
         </li>
         <li>
+          <router-link to="/divers/importScene">
+            Importation d'une scene
+          </router-link>
+        </li>
+        <li>
           <router-link to="/divers/melody3D">
             Le Son en 3D
           </router-link>

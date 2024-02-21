@@ -27,10 +27,12 @@ import MouseMovement from '@/pages/rendering/E_RenderingMouse.vue';
 
 import LesObjet3D from '@/pages/objet3D/A_Objet3DIndex.vue';
 import IntroObjet3D from '@/pages/objet3D/B_Intro_Objet3D.vue';
+import CameraMovement from '@/pages/objet3D/C_CameraMovement.vue';
 
 import VersDivers from '@/pages/divers/A_DiversIndex.vue';
 import IntroDivers from '@/pages/divers/B_Intro_Divers.vue';
-import Melody3D from '@/pages/divers/C_Melody3D.vue';
+import ImportScene from '@/pages/divers/C_ImportationScene.vue';
+import Melody3D from '@/pages/divers/D_Melody3D.vue';
 
 
 import VersEvaluation from '@/pages/evaluation/A_EvaluationIndex.vue';
@@ -107,9 +109,9 @@ const router = createRouter({
                     component: Melody3D
                 },
                 {
-                    path: 'cubeAvecTexture',
-                    name: 'cubeAvecTexture',
-                    component: CubeAvecTexture
+                    path: 'importScene',
+                    name: 'ImportScene',
+                    component: ImportScene
                 }
             ]
         },
@@ -144,6 +146,11 @@ const router = createRouter({
                     path: '',
                     name: 'IntroObjet3D',
                     component: IntroObjet3D
+                },
+                {
+                    path: 'cameraMovement',
+                    name: 'CameraMovement',
+                    component: CameraMovement
                 }
             ]
         },

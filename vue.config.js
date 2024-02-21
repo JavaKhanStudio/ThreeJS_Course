@@ -6,7 +6,7 @@ module.exports = defineConfig({
     // Add rule for .glsl, .vs, .fs, .vert, and .frag files
     config.module
         .rule('raws')
-        .test(/\.(glsl|vs|fs|vert|frag|mtl)$/)
+        .test(/\.(glsl|vs|fs|vert|frag|mtl|glb)$/)
         .use('raw-loader')
         .loader('raw-loader')
         .end();

@@ -4,22 +4,22 @@
       <ul>
 
         <li>
-          <router-link to="/intro">
+          <router-link to="/objet3D">
             TODO
           </router-link>
         </li>
         <li>
-          <router-link to="/intro/TODO">
+          <router-link to="/objet3D/cameraMovement">
+            Camera Movement
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/objet3D/TODO">
             TODO
           </router-link>
         </li>
         <li>
-          <router-link to="/intro/TODO">
-            TODO
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/intro/TODO">
+          <router-link to="/objet3D/TODO">
             TODO
           </router-link>
         </li>

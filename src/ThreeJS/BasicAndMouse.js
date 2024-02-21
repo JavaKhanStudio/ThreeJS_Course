@@ -1,5 +1,8 @@
 
 import * as THREE from "three";
+import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
+
+
 
 let inDebuggingMode;
 let frameId;
@@ -8,16 +11,17 @@ const mouse = {x: 0, y: 0};
 let mouse3D = new THREE.Vector3();
 
 
-
-let  renderer;
+let renderer;
 let canvas ;
-let  camera;
-let  scene;
-let  container;
-let  canvasBounds;
+let camera;
+let scene;
+let container;
+let controls ;
+let canvasBounds;
 let externalRenderFunction = null;
 let externalMouseMovementFunction = null;
 
+const clock = new THREE.Clock();
 
 export function getRenderer()
 {
@@ -29,6 +33,11 @@ export function getScene()
     return scene ;
 }
 
+export function setScene(newScene)
+{
+    scene = newScene ;
+}
+
 function builtEventListener() {
     window.addEventListener('mousemove', onMouseMove, false);
     window.addEventListener('resize', onWindowResize, false);
@@ -37,7 +46,6 @@ function builtEventListener() {
 
 function onWindowResize() {
     if (!camera || !renderer || !container) return;
-
 
     const width = container.clientWidth;
     const height = container.clientHeight;
@@ -63,7 +71,7 @@ function updateCanvasBounds() {
     }
 }
 
-export function initThreeJSBase(isContainer, inDebug) {
+export function initThreeJSBase(isContainer, inDebug, maScene, maCamera) {
 
     container = isContainer;
     inDebuggingMode = inDebug ;
@@ -83,9 +91,16 @@ export function initThreeJSBase(isContainer, inDebug) {
 
     createRenderer(canvas, !inDebuggingMode);
     updateCanvasBounds();
-    createCamera(container.clientWidth, container.clientHeight);
+    if(!maCamera)
+        createCamera(container.clientWidth, container.clientHeight);
+    else
+        camera = maCamera
 
-    scene = new THREE.Scene();
+    // Si je n'ai pas déja défini ma scene
+    if(!maScene)
+        scene = new THREE.Scene();
+    else
+        scene = maScene ;
 
     if (inDebuggingMode) {
         setInDebug(true);
@@ -99,6 +114,9 @@ export function initThreeJSBase(isContainer, inDebug) {
     function render(time) {
 
         makeRenderCheck() ;
+
+        if(controls)
+            controls.update( clock.getDelta() );
 
         time *= 0.001;
 
@@ -123,6 +141,33 @@ export function initThreeJSBase(isContainer, inDebug) {
     }
 
     requestAnimationFrame(render);
+}
+
+export function enterScene(isContainer, scenePath, cameraName = "MainCamera", inDebug = true) {
+    const loader = new THREE.ObjectLoader();
+    let sceneCamera ;
+    loader.load(
+        scenePath, // Path to your exported scene file
+        function ( maScene ) {
+            // Fait apres le chargement
+            const cameraByName = maScene.getObjectByName(cameraName, true); // Mettre le nom de l'objet cherché
+
+            if (cameraByName && cameraByName instanceof THREE.Camera) {
+                // Camera trouver
+                sceneCamera = cameraByName;
+            } else {
+                console.error('Camera not found by name');
+            }
+
+            initThreeJSBase(isContainer, inDebug, maScene, sceneCamera ) ;
+        },
+        function ( xhr ) {
+            console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+        },
+        function ( err ) {
+            console.error( 'An error happened' + err);
+        }
+    );
 }
 
 export function setCustomRenderFunction(func) {
@@ -169,7 +214,7 @@ function createCamera(width, height) {
     const fov = 50;
     const aspect = width / height; // Adjust for canvas size
     const near = 0.1;
-    const far = 300;
+    const far = 20000;
 
     camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 
@@ -196,17 +241,17 @@ export function setCamera(newCamera) {
     camera = newCamera
 }
 
-export function zoomInOrOut(isIn) {
-
-    let cameraDirection = camera.position.clone().normalize();
+export function zoomInOrOut(zoomIn) {
     let zoomStep = 2;
 
-    if (isIn) {
-        camera.position.sub(cameraDirection.multiplyScalar(zoomStep));
-    } else {
-        camera.position.add(cameraDirection.multiplyScalar(zoomStep));
-    }
+    let cameraDirection = new THREE.Vector3();
+    camera.getWorldDirection(cameraDirection);
 
+    if (zoomIn) {
+        camera.position.addScaledVector(cameraDirection, zoomStep);
+    } else {
+        camera.position.addScaledVector(cameraDirection, -zoomStep);
+    }
 }
 
 // Debugging stuff
@@ -314,6 +359,17 @@ export function initLight() {
     return initLightPrecise(5, 10, 7.5) ;
 }
 
+export function setControl_FirstPerson(setMovementSpeed = 1000, setLookSpeed = 0.125, setLookVertical =true) {
+    controls = new FirstPersonControls( camera, renderer.domElement );
+
+    controls.movementSpeed = setMovementSpeed;
+    controls.lookSpeed = setLookSpeed;
+    controls.lookVertical = setLookVertical;
+}
+
+export function setControl_kill() {
+    controls = null ;
+}
 export function removeEventListeners() {
     window.removeEventListener('mousemove', onMouseMove, false);
     window.removeEventListener('resize', onWindowResize, false);
@@ -323,4 +379,8 @@ export function removeEventListeners() {
 export function cleanupThreeJS() {
     cancelAnimationFrame(frameId);
     removeEventListeners() ;
- }
+}
+
+export function setBackgroundColor(color) {
+    scene.background = new THREE.Color( color );
+}

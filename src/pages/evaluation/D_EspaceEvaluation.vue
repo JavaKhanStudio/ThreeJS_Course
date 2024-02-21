@@ -1,7 +1,7 @@
 <template>
   <div class="columnContainer">
-    <h1>Espace Evaluation</h1>
-    <canvas id="c"></canvas>
+    <h1 id="c">Espace Evaluation</h1>
+
   </div>
 </template>
 
