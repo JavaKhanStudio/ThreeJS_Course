@@ -71,6 +71,8 @@ function updateCanvasBounds() {
     }
 }
 
+
+
 export function initThreeJSBase(isContainer, inDebug, maScene, maCamera) {
 
     container = isContainer;
@@ -91,10 +93,11 @@ export function initThreeJSBase(isContainer, inDebug, maScene, maCamera) {
 
     createRenderer(canvas, !inDebuggingMode);
     updateCanvasBounds();
-    if(!maCamera)
-        createCamera(container.clientWidth, container.clientHeight);
+    if(maCamera)
+        importCamera(container.clientWidth, container.clientHeight,  maCamera) ;
     else
-        camera = maCamera
+        createCamera(container.clientWidth, container.clientHeight);
+
 
     // Si je n'ai pas déja défini ma scene
     if(!maScene)
@@ -143,7 +146,7 @@ export function initThreeJSBase(isContainer, inDebug, maScene, maCamera) {
     requestAnimationFrame(render);
 }
 
-export function enterScene(isContainer, scenePath, cameraName = "MainCamera", inDebug = true) {
+export function enterScene(isContainer, scenePath, cameraName = "OrthographicCamera", inDebug = true) {
     const loader = new THREE.ObjectLoader();
     let sceneCamera ;
     loader.load(
@@ -219,6 +222,15 @@ function createCamera(width, height) {
     camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 
     resetCamera() ;
+}
+
+function importCamera(width, height, maCamera) {
+    maCamera.fov = 50;
+    maCamera.aspect = width / height;
+    maCamera.near = 0.1;
+    maCamera.far = 20000;
+
+    camera = maCamera ;
 }
 
 export function resetCamera() {
@@ -374,6 +386,7 @@ export function removeEventListeners() {
     window.removeEventListener('mousemove', onMouseMove, false);
     window.removeEventListener('resize', onWindowResize, false);
     window.removeEventListener('scroll', updateCanvasBounds, false);
+    window.removeEventListener('mousedown', updateCanvasBounds, false);
 }
 
 export function cleanupThreeJS() {

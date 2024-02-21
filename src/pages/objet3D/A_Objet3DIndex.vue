@@ -14,8 +14,8 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/objet3D/TODO">
-            TODO
+          <router-link to="/objet3D/rayCasting">
+            RayCasting
           </router-link>
         </li>
         <li>

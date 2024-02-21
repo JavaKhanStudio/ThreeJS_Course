@@ -28,6 +28,7 @@ import MouseMovement from '@/pages/rendering/E_RenderingMouse.vue';
 import LesObjet3D from '@/pages/objet3D/A_Objet3DIndex.vue';
 import IntroObjet3D from '@/pages/objet3D/B_Intro_Objet3D.vue';
 import CameraMovement from '@/pages/objet3D/C_CameraMovement.vue';
+import RayCasting from '@/pages/objet3D/D_RayCasting.vue';
 
 import VersDivers from '@/pages/divers/A_DiversIndex.vue';
 import IntroDivers from '@/pages/divers/B_Intro_Divers.vue';
@@ -151,6 +152,11 @@ const router = createRouter({
                     path: 'cameraMovement',
                     name: 'CameraMovement',
                     component: CameraMovement
+                },
+                {
+                    path: 'rayCasting',
+                    name: 'RayCasting',
+                    component: RayCasting
                 }
             ]
         },
