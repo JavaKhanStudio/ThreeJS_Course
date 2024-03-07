@@ -3,7 +3,7 @@
 import * as ThreeCanvas from "@/ThreeJS/BasicAndMouse" ;
 import * as THREE from "three";
 import BasicElement from "@/assets/ui/BasicElement.vue";
-import {addComponent, setCameraPosition} from "@/ThreeJS/BasicAndMouse";
+import {addUIComponent, setCameraPosition} from "@/ThreeJS/BasicAndMouse";
 import SimpleElement from "@/assets/ui/SimpleElement.vue";
 import ComplexeElement from "@/assets/ui/ComplexeElement.vue";
 
@@ -25,36 +25,24 @@ export function initAndBuildThree(container) {
     cubeElement1 = new THREE.Mesh(cubeGeo, new THREE.MeshBasicMaterial({ color: "red" }));
     ThreeCanvas.getScene().add(cubeElement1) ;
     cubes.push(cubeElement1) ;
-    myUiElement1 = addComponent(ComplexeElement, true) ;
+    myUiElement1 = addUIComponent(ComplexeElement, true) ;
     uiMaps.set(cubeElement1, myUiElement1);
 
     cubeElement2 = new THREE.Mesh(cubeGeo, new THREE.MeshBasicMaterial({ color: "blue" }));
     ThreeCanvas.getScene().add(cubeElement2) ;
     cubes.push(cubeElement2) ;
-    myUiElement2 = addComponent(SimpleElement, true) ;
+    myUiElement2 = addUIComponent(SimpleElement, true) ;
     uiMaps.set(cubeElement2, myUiElement2);
 
     cubeElement3 = new THREE.Mesh(cubeGeo, new THREE.MeshBasicMaterial({ color: "green" }));
     ThreeCanvas.getScene().add(cubeElement3) ;
-    myUiElement3 = addComponent(BasicElement, true) ;
+    myUiElement3 = addUIComponent(BasicElement, true) ;
     cubes.push(cubeElement3) ;
     uiMaps.set(cubeElement3, myUiElement3);
 
     resetCubesPosition()
 
-
     ThreeCanvas.lookAtIm(cubeElement1) ;
-
-
-
-
-
-
-
-
-
-
-
 
     let time1 = 0 ;
     let time2 = 0 ;

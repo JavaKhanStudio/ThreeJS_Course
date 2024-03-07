@@ -148,7 +148,7 @@ export function initThreeJSBase(isContainer, inDebug, maScene, maCamera) {
     requestAnimationFrame(render);
 }
 
-export function addComponent(MyComponent, startInvisible = true, forceCss = true) {
+export function addUIComponent(MyComponent, startInvisible = true, forceCss = true) {
 
     const element = document.createElement('div');
     const app = createApp(MyComponent);
