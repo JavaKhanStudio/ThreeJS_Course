@@ -11,7 +11,7 @@ export function initAndBuildThree(container) {
     const normalMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const highlightMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
 
-// Blocks
+    // Blocks
     const blocks = [];
     const blocksMaterial = [];
     for (let i = 0; i < 3; i++) {
@@ -20,7 +20,7 @@ export function initAndBuildThree(container) {
 
 
         block.userData.id = "Je suis le bloc " + (i + 1) ;
-        block.userData.id_position = i;  // Second identifier
+        block.userData.id_position = i;
         ThreeCanvas.getScene().add(block);
         blocks.push(block);
         blocksMaterial.push(normalMaterial) ;

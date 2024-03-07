@@ -1,6 +1,7 @@
-
+/* eslint-disable no-unused-vars */
 import * as THREE from "three";
 import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
+import {createApp } from 'vue';
 
 
 
@@ -11,16 +12,17 @@ const mouse = {x: 0, y: 0};
 let mouse3D = new THREE.Vector3();
 
 
-let renderer;
-let canvas ;
-let camera;
-let scene;
-let container;
+let renderer, canvas, camera;
+let scene, container;
 let controls ;
 let canvasBounds;
 let externalRenderFunction = null;
 let externalMouseMovementFunction = null;
 
+let cameraStartX, cameraStartY, cameraStartZ ;
+
+let uiElements = [] ;
+let uiElementsFunctions = [] ;
 const clock = new THREE.Clock();
 
 export function getRenderer()
@@ -146,31 +148,99 @@ export function initThreeJSBase(isContainer, inDebug, maScene, maCamera) {
     requestAnimationFrame(render);
 }
 
-export function enterScene(isContainer, scenePath, cameraName = "OrthographicCamera", inDebug = true) {
-    const loader = new THREE.ObjectLoader();
-    let sceneCamera ;
-    loader.load(
-        scenePath, // Path to your exported scene file
-        function ( maScene ) {
-            // Fait apres le chargement
-            const cameraByName = maScene.getObjectByName(cameraName, true); // Mettre le nom de l'objet cherché
+export function addComponent(MyComponent, startInvisible = true, forceCss = true) {
 
-            if (cameraByName && cameraByName instanceof THREE.Camera) {
-                // Camera trouver
-                sceneCamera = cameraByName;
-            } else {
-                console.error('Camera not found by name');
+    const element = document.createElement('div');
+    const app = createApp(MyComponent);
+    app.mount(element);
+
+    document.querySelector('#dynamic-container').appendChild(element);
+
+    if(startInvisible) {
+        element.style.visibility = 'hidden';
+    }
+
+    if(forceCss) {
+        setCssForUI(element);
+    }
+
+    uiElements.push(element) ;
+
+    return element ;
+}
+
+function setCssForUI(element) {
+
+    element.style.position = "absolute";
+    element.style.transform = "translate(-50%, -50%)";
+    element.style.zIndex = '1000';
+    element.style.overflow = "hidden" ;
+
+    // element.classList.add('my-custom-style');
+}
+
+export function followElement(htmlElement, elementToFollow, decalX = 0, decalY = 0) {
+
+    if(!htmlElement || !elementToFollow) {
+        console.log("Can't follow yet")
+        return ;
+    }
+
+
+    const vector = new THREE.Vector3();
+
+    // Convert the world position of the mesh to screen space
+    vector.setFromMatrixPosition(elementToFollow.matrixWorld);
+    vector.project(camera);
+
+    // Convert the normalized screen space coordinates to CSS coordinates
+
+    const x = (vector.x *  .5 + .5) * renderer.domElement.clientWidth + decalX;
+    const y = -(vector.y * .5 - .5) * renderer.domElement.clientHeight + decalY;
+
+    // Update the position of the HTML element
+    var rect = canvas.getBoundingClientRect();
+
+    let posX = x + rect.left ;
+    let posY = y + rect.top ;
+
+    htmlElement.style.left = posX + "px";
+    htmlElement.style.top = posY + "px";
+}
+
+export function enterScene(isContainer, scenePath, cameraName = "PerspectiveCamera", inDebug = true, toggleShadow = true) {
+    return new Promise((resolve, reject) => {
+        const loader = new THREE.ObjectLoader();
+        let sceneCamera ;
+        loader.load(
+            scenePath, // Path to your exported scene file
+            function ( maScene ) {
+                // Fait apres le chargement
+                const cameraByName = maScene.getObjectByName(cameraName, true); // Mettre le nom de l'objet cherché
+
+                if (cameraByName && cameraByName instanceof THREE.Camera) {
+                    // Camera trouver
+                    sceneCamera = cameraByName;
+                } else {
+                    console.error('Camera not found by name');
+                }
+
+                initThreeJSBase(isContainer, inDebug, maScene, sceneCamera ) ;
+
+                if(toggleShadow)
+                    toggleShadows() ;
+
+                resolve(maScene);
+            },
+            function ( xhr ) {
+                console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+            },
+            function ( err ) {
+                console.error( 'An error happened' + err);
+                reject(err);
             }
-
-            initThreeJSBase(isContainer, inDebug, maScene, sceneCamera ) ;
-        },
-        function ( xhr ) {
-            console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-        },
-        function ( err ) {
-            console.error( 'An error happened' + err);
-        }
-    );
+        );
+    });
 }
 
 export function setCustomRenderFunction(func) {
@@ -221,6 +291,10 @@ function createCamera(width, height) {
 
     camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 
+    cameraStartX = 3 ;
+    cameraStartY = 3 ;
+    cameraStartZ = 3 ;
+
     resetCamera() ;
 }
 
@@ -231,18 +305,36 @@ function importCamera(width, height, maCamera) {
     maCamera.far = 20000;
 
     camera = maCamera ;
+
+    cameraStartX = camera.position.x ;
+    cameraStartY = camera.position.y ;
+    cameraStartZ = camera.position.z ;
 }
 
 export function resetCamera() {
-    camera.position.x = 3.0;
-    camera.position.y = 3.0;
-    camera.position.z = 3.0;
+    camera.position.x = cameraStartX;
+    camera.position.y = cameraStartY;
+    camera.position.z = cameraStartZ;
 }
 
-export function setCameraPosition(x,y,z) {
+export function setCameraPosition(x,y,z, asInitPosition = false) {
     camera.position.x = x;
     camera.position.y = y;
     camera.position.z = z;
+
+    if(asInitPosition) {
+        cameraStartX = x ;
+        cameraStartY = y ;
+        cameraStartZ = z ;
+    }
+}
+
+export function toggleVisibility(forElement) {
+    if (forElement.style.visibility === 'hidden') {
+        forElement.style.visibility = 'visible';
+    } else {
+        forElement.style.visibility = 'hidden';
+    }
 }
 
 export function getCamera() {
@@ -264,6 +356,15 @@ export function zoomInOrOut(zoomIn) {
     } else {
         camera.position.addScaledVector(cameraDirection, -zoomStep);
     }
+}
+
+export function setAsCastAndReceive(model, cast =true, receive=true) {
+    model.traverse(function(object) {
+        if (object.isMesh) {
+            object.castShadow = cast;
+            object.receiveShadow = receive;
+        }
+    });
 }
 
 // Debugging stuff
@@ -389,9 +490,17 @@ export function removeEventListeners() {
     window.removeEventListener('mousedown', updateCanvasBounds, false);
 }
 
+function cleanUI() {
+    let uiContainer = document.querySelector('#dynamic-container')
+    uiElements.forEach(el => uiContainer.removeChild(el)) ;
+
+    uiElements = [] ;
+}
+
 export function cleanupThreeJS() {
     cancelAnimationFrame(frameId);
     removeEventListeners() ;
+    cleanUI() ;
 }
 
 export function setBackgroundColor(color) {

@@ -40,7 +40,7 @@ export function initAndBuildThree(container) {
     greenCube.position.set(4, 0, 0);
     ThreeCanvas.add(greenCube);
 
-    ThreeCanvas.setCameraPosition(2.5,5,15)
+    ThreeCanvas.setCameraPosition(2.5,5,15, true)
     ThreeCanvas.lookAtIm(redCube) ;
 
     buildFogs() ;

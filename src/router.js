@@ -33,8 +33,9 @@ import RayCasting from '@/pages/objet3D/D_RayCasting.vue';
 import VersDivers from '@/pages/divers/A_DiversIndex.vue';
 import IntroDivers from '@/pages/divers/B_Intro_Divers.vue';
 import ImportScene from '@/pages/divers/C_ImportationScene.vue';
-import Melody3D from '@/pages/divers/D_Melody3D.vue';
-
+import AsyncLoading from '@/pages/divers/D_AsyncLoading.vue';
+import HtmlUI from '@/pages/divers/E_HtmlUI.vue';
+import Melody3D from '@/pages/divers/F_Melody3D.vue';
 
 import VersEvaluation from '@/pages/evaluation/A_EvaluationIndex.vue';
 import IntroEvaluation from '@/pages/evaluation/B_Intro_Evaluation.vue';
@@ -105,14 +106,24 @@ const router = createRouter({
                     component: IntroDivers
                 },
                 {
-                    path: 'melody3D',
-                    name: 'Melody3D',
-                    component: Melody3D
-                },
-                {
                     path: 'importScene',
                     name: 'ImportScene',
                     component: ImportScene
+                },
+                {
+                    path: 'asyncLoading',
+                    name: 'AsyncLoading',
+                    component: AsyncLoading
+                },
+                {
+                    path: 'htmlUI',
+                    name: 'HtmlUI',
+                    component: HtmlUI
+                },
+                {
+                    path: 'melody3D',
+                    name: 'Melody3D',
+                    component: Melody3D
                 }
             ]
         },

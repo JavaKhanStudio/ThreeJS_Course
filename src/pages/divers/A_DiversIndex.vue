@@ -14,6 +14,16 @@
           </router-link>
         </li>
         <li>
+          <router-link to="/divers/asyncLoading">
+            Concept de Wait
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/divers/htmlUI">
+            UI Par HTML
+          </router-link>
+        </li>
+        <li>
           <router-link to="/divers/melody3D">
             Le Son en 3D
           </router-link>

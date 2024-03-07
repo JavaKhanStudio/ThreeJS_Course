@@ -3,8 +3,7 @@ import * as ThreeCanvas from "@/ThreeJS/BasicAndMouse" ;
 
 export function initAndBuildThree(container) {
 
-    ThreeCanvas.enterScene(container,'/scene/radioV1.json') ;
-
+    ThreeCanvas.enterScene(container,'/scene/radioV2.json') ;
 
 
 }

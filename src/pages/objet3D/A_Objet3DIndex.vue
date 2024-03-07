@@ -1,11 +1,11 @@
 <template>
   <div>
+    <top-logo-section/>
     <nav>
       <ul>
-
         <li>
           <router-link to="/objet3D">
-            TODO
+            Intro a Object 3D
           </router-link>
         </li>
         <li>
@@ -16,11 +16,6 @@
         <li>
           <router-link to="/objet3D/rayCasting">
             RayCasting
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/objet3D/TODO">
-            TODO
           </router-link>
         </li>
       </ul>
