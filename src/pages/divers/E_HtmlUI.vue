@@ -5,8 +5,6 @@
     <div class="optionsContainer">
       <button @click="resetCubePosition">Reset Cube Position</button>
 
-      <button @click="addUIElement">Add UI element</button>
-
       <div class="checkboxContainer">
         <label for="isMovingCheckboxAll">Move ALL</label>
         <input type="checkbox" id="isMovingCheckboxAll" @change="setAllMoving($event.target.checked)">
@@ -50,7 +48,6 @@ export default {
     const canvas = this.$el.querySelector('#c');
     const container = canvas.parentElement;
     initAndBuildThree(container);
-    // const ComponentConstructor = Vue.extend(MyComponent);
   },
   methods: {addUIElement: purgeUIElements, resetCubePosition: resetCubesPosition, setAllMoving : setAllMoving, setMoving1: setMoving1, setMoving2: setMoving2, setMoving3: setMoving3},
   beforeUnmount() {
